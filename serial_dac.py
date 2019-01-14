@@ -14,11 +14,13 @@ s = serial.Serial("/dev/ttyUSB0", speed)
 # Different version - precalculated values with a better distribution of ones and zeros
 levelValues = [ 0x00, 0x08, 0x24, 0x92, 0xAA, 0xAE, 0xEE, 0xEF, 0xFF]
 
-levelRelativeMax = 1000
+levelRelativeMax = 100
 
 levelsRelative = [(i) * levelRelativeMax / (len(levelValues) - 1) for i in range(len(levelValues))]
 
 def mix(a,b):
+    
+    return a + b
     
     # TODO Fix this function - it should be better
     bIndex = 0
@@ -50,21 +52,11 @@ def mix(a,b):
 #print(mix(30 * ["0"], 5 * ["1"]))
 
 
-#exit(1)
-
-
-
-
-print(levelValues)
-print(levelsRelative)
-print(len(levelValues))
-print(len(levelsRelative))
-
-
-
 def showLevels():
+    print("Number of levels: ", len(levelValues))
     for i in range(len(levelValues)):
-        print("{5:b}".format(levelValues[i]))
+        print("Absolut value: {0:8b}, relative value: {1}".format(levelValues[i], levelsRelative[i]))
+        
    
 def findRange(value):
     #print("value", value)
@@ -117,9 +109,12 @@ def dither(value, numberOfBytes = 11):
 
     return sendTime
 
+
+showLevels()
+
 if __name__ == "__main__":
 
-    print("Tralala")
+
 
     #while 1:
     #    for i in range(10):
